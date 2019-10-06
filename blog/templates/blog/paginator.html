@@ -1,0 +1,17 @@
+<div class="container">
+	<div class="paginator mx-auto">
+		<span class="step-links">
+			{% if posts.has_previous %}
+				<a href="?page={{ posts.previous_page_number }}" class="btn btn-outline-info m-1">Previous</a>
+			{% endif %}
+			
+			{% if posts.number %}
+				<a href="?page={{ posts.number }}" class="btn btn-primary">{{ posts.number }}</a>	
+			{% endif %}
+			
+			{% if posts.has_next %}
+				<a href="?page={{ posts.next_page_number }}" class="btn btn-outline-info m-1">Next</a>
+			{% endif %}
+		</span> 
+	</div>
+</div>

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Post - Detail{% endblock title %}
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/post_detail.css' %}">
+{% endblock %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="display-4">{{ post.title }}</h2>
+				<div class="imgBx mx-auto">
+					<img src="{{ post.image.url }}" class="img-fluid">
+				</div>
+			</div>	
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="content border my-3" style="background-color: #cff;">
+					<p>{{ post.body|markdown }}</p>
+					<div class="last">
+						<p><small class="text-muted">Published: {{ post.publish|date }}</small></p>
+						<p><a href="{% url 'blog:share' post.slug %}">share</a></p>
+						<p><h3>-{{ post.author }}</h3></p>
+					</div>
+					<div class="m-2">
+						<p class="tags px-1">Tags :
+							{% for t in post.tags.all %}
+								<a href="{% url 'blog:post-list-tag' t.slug %}">{{ t.name }} </a>
+								{% if not forloop.last %}, {% endif %}
+							{% endfor %}
+						</p>
+					</div>
+					
+				</div>
+			</div>
+		</div>		
+
+	</div>
+
+	<div style="background-color: #ddd; padding: 20px; margin: 30px auto;">
+		<div class="ml-3 border-bottom d-flex align-items-center justify-content-between ">
+			<div class="display-4">Comments: {{comments.count}}</div>
+			<div>
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Add Comment</a>
+				</div>
+		</div>
+		<div class="collapse mydiv" id="collapseExample">
+ 			<form method="post">
+ 				{% csrf_token %}
+ 				{{ comment_form|crispy }}
+ 				<div class="form-group text-center">
+ 					<input type="submit" class="btn btn-info" value="Comment">	
+ 				</div>
+ 				
+ 			</form>
+		</div>
+		{% for c in comments %}
+			<div class="container">
+				<div class="row my-4">
+					<div class="col">
+						<div class="comTxt d-flex justify-content-between align-items-center">
+							<p>{{ c.name }}:{{ c.text|markdown }}</p>
+							<a class="btn btn-primary" data-toggle="collapse" href="#more{{ forloop.counter }}" role="button" aria-expanded="false" aria-controls="more">More</a>
+						</div>
+						<div class="collapse more" id="more{{ forloop.counter }}">
+							<div class="d-flex justify-content-between ">
+								<p>email : {{ c.email }}</p>
+								<p>On : {{ c.created }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock content %}
+
+{% block side %}
+	{% if similar_posts %}
+		<div class="container my-3">
+			<h3> Similar Posts</h3>
+			<ul>
+				{% for p in similar_posts  %}
+					<li><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></li>
+				{% endfor %}				
+			</ul>
+		</div>
+	{% endif %}
+{% endblock side %}

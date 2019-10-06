@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% load static %}
+{% block title %}Blog - Home{% endblock %}
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/post_list.css' %}">
+{% endblock %}
+{% block content %}
+	{% if tag %}
+		<h2 class="m-4">Posts tagged with "{{ tag.name }}" are....</h2>
+	{% endif %}
+	<div class="container">
+		<div class="row">
+			{% for p in posts %}
+				<div class="col-sm-12 col-md-6">
+					<div class="postBx m-2">
+						<div class="imgBx"><img src="{{ p.image.url }}" class="img-fluid"></div>
+						<div class="title"><h2><a href="{% url 'blog:post-detail' slug=p.slug %}" class="text-light">{{ p.title }}</a></h2></div>
+						<div class="content">
+							<div class="desc"><p>{{p.body|markdown|truncatewords_html:20}}</p></div>
+							<div class="date"><p>{{p.publish|date}}</p></div>
+							<div class="read-more d-flex justify-content-between">
+								<a href="{% url 'blog:post-detail' slug=p.slug %}" class="btn btnD1">read more</a>
+								<a href="{% url 'blog:share' slug=p.slug %}">Share</a>
+								<p class="align-self-center"><a href="">{{p.author}}</a></p>
+							</div>
+							<div class="tags px-2 mt-2">
+								<p>
+									Tags : 
+									{% for t in p.tags.all %}
+										<a href="{% url 'blog:post-list-tag' t.slug%}">{{ t.name }} </a>
+										{% if not forloop.last %}, {% endif%}
+									{% endfor %}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	{% include 'blog/paginator.html' %}
+
+{% endblock %} 

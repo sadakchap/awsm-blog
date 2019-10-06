@@ -1,0 +1,42 @@
+.imgBx
+{
+	box-shadow: 4px 5px 10px rgba(0,0,0,.2);
+	height: 400px;
+}
+.imgBx img
+{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.content
+{
+	padding: 20px;
+	margin: 0;
+}
+.last
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	width: 100%;
+	margin: 0 20px;
+}
+.mydiv
+{    
+	max-width: 550px;
+    margin: 0 auto;
+}
+.comTxt
+{
+	background-color: #ffc;
+	padding: 10px;
+	color: #de0909;
+}
+.more
+{
+	background: linear-gradient(45deg,#9013a0,#da2116);
+	color: #fff;
+	padding: 0 20px;
+	padding-top: 10px;
+}

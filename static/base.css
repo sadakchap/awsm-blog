@@ -1,0 +1,17 @@
+body{
+	margin: 0;
+	padding: 0;
+	background-color: #F8CABB;
+}
+.h100
+{
+	height: 100%;
+}
+.height100v
+{
+	min-height: 100vh;
+}
+.clearfix
+{
+	clear: both;
+}

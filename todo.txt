@@ -1,0 +1,2 @@
+1. change database to postgresql to use trigam similarity 
+2. Make good UI

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Share - Post{% endblock %}
+{% block styles %}
+{% endblock %}
+{% block content %}
+	
+	{% if sent %}
+		<h1>E-mail successfully SENT!</h1>
+		<p>
+			"{{ post.title }} was successfully sent to {{ form.cleaned_data.to }}"
+		</p>
+	{% else %}
+	<div class="container my-3">
+		<form method="post">
+			{% csrf_token %}
+			<fieldset class="mb-2">
+				<legend class="m-2">Share Post</legend>
+				{{ form|crispy }}
+			</fieldset>
+			<input type="submit" class="btn btn-outline-primary" value="Send!">
+		</form>
+	</div>
+	{% endif %}
+	
+{% endblock %}
